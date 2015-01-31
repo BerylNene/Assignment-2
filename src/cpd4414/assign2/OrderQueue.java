@@ -45,6 +45,19 @@ public class OrderQueue {
         }
         return orderQueue.peek();
     }
+   
+ 
+   
+    public void fulfill(Order order){
+        if (order.getTimeProcessed()==null){
+            throw new RuntimeException("This order does not have time processed");
+        }
+        
+        if (order.getTimeReceived()==null){
+            throw new RuntimeException("This order does not have time received");
+        }
+        
     }
+}
 
 

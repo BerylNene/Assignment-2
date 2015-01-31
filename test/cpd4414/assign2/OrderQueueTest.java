@@ -80,6 +80,7 @@ public class OrderQueueTest {
       }
       assertTrue(existThrow);
     }
+    
   @Test
     public void testGivenNewOrderArriveThereIsNoListOfPurchaseThrowException() throws Exception{
    boolean existThrow = false;
@@ -96,7 +97,7 @@ public class OrderQueueTest {
     }
     
     @Test
-    public void testGivenRequestForNextOrderWhenOrderInSystemReturnOrderEarliestTimeReceivedAndDoesNotHaveTimeProcess() throws Exception{
+    public void testGivenRequestForNextOrderWhenOrderInSystemReturnOrderEarliestTimeReceivedAndDoesNotHaveTimeProcess(){
        OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("CUST00001", "ABC Construction");
         order.addPurchase(new Purchase("PROD0004", 450));
@@ -108,5 +109,52 @@ public class OrderQueueTest {
         
         
     }
+    
+ @Test
+    public void testGivenRequestOrderThereIsNoOrderInSystemReturnNull() {
+       OrderQueue orderQueue = new OrderQueue();
+        Order order = new Order("CUST00001", "ABC Construction");
+        order.addPurchase(new Purchase("PROD0004", 450));
+        order.addPurchase(new Purchase("PROD0006", 250));
+        orderQueue.add(order);
+        
+        
+    }
+    @Test
+    public void testGivenRequestToFulfillOrderWhenOrderDoesNotHaveTimeProcessedThrowException() throws Exception{
+        boolean existThrow=false;
+        OrderQueue orderQueue = new OrderQueue();
+        Order order = new Order("CUST00001", "ABC Construction");
+        order.addPurchase(new Purchase("PROD0004", 450));
+        order.addPurchase(new Purchase("PROD0006", 250));
+        order.setTimeProcessed(new Date(new Date().getTime()-1234567890));
+        orderQueue.add(order);
+        try{
+          orderQueue.fulfill(order);
+      }
+      catch (Exception ex){
+          existThrow = true;
+      }
+      assertTrue(existThrow);
+    }
+    
+    @Test
+    public void testGivenRequestToFulfillOrderWhenOrderDoesNotHaveTimeReceivedThrowException() throws Exception{
+        boolean existThrow =false;
+        OrderQueue orderQueue = new OrderQueue();
+        Order order = new Order ("CUST00001", "ABC Construction");
+        order.addPurchase(new Purchase("PROD0004", 450));
+        order.addPurchase(new Purchase("PROD0006", 250));
+        order.setTimeReceived(new Date(new Date().getTime()-1234567890));
+        orderQueue.add(order);
+        try{
+          orderQueue.fulfill(order);
+      }
+      catch (Exception ex){
+          existThrow = true;
+      }
+      assertTrue(existThrow);
+    }
+    }
 
-}
+
