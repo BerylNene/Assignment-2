@@ -80,6 +80,33 @@ public class OrderQueueTest {
       }
       assertTrue(existThrow);
     }
+  @Test
+    public void testGivenNewOrderArriveThereIsNoListOfPurchaseThrowException() throws Exception{
+   boolean existThrow = false;
+   OrderQueue orderQueue = new OrderQueue();
+   Order order = new Order ("CUST00001", "ABC Construction");
   
+      try{
+          orderQueue.add(order);
+      }
+      catch (Exception ex){
+          existThrow = true;
+      }
+      assertTrue(existThrow);
+    }
+    
+    @Test
+    public void testGivenRequestForNextOrderWhenOrderInSystemReturnOrderEarliestTimeReceivedAndDoesNotHaveTimeProcess() throws Exception{
+       OrderQueue orderQueue = new OrderQueue();
+        Order order = new Order("CUST00001", "ABC Construction");
+        order.addPurchase(new Purchase("PROD0004", 450));
+        order.addPurchase(new Purchase("PROD0006", 250));
+        orderQueue.add(order);
+        
+        Order result= orderQueue.nextOrder();
+        Order expResult = orderQueue.orderQueue.peek();
+        
+        
+    }
 
 }

@@ -31,12 +31,20 @@ public class OrderQueue {
         if (order.getCustomerId().isEmpty() &&order.getCustomerName().isEmpty()){
             throw new RuntimeException("Customer Id or Name Does not Exist");
         }
-       
+        if (order.getListOfPurchases().isEmpty()){
+            throw new RuntimeException ("No Purchase has been made");
+        }
         
         orderQueue.add(order);
         order.setTimeReceived(new Date());
     }
-   
+   public Order nextOrder(){
+        if (orderQueue.isEmpty()){
+            return null;
+    
+        }
+        return orderQueue.peek();
+    }
     }
 
 
