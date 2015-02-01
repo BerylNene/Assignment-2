@@ -38,6 +38,7 @@ public class OrderQueue {
         orderQueue.add(order);
         order.setTimeReceived(new Date());
     }
+    
    public Order nextOrder(){
         if (orderQueue.isEmpty()){
             return null;
@@ -46,6 +47,15 @@ public class OrderQueue {
         return orderQueue.peek();
     }
    
+     public void processed(Order order){
+       if (order.getTimeReceived()!=null)
+       {
+           throw new RuntimeException("This order does not have time processed");
+       }
+       else 
+           throw new RuntimeException("This order does not have time processed");
+                  
+   }
  
    
     public void fulfill(Order order){
@@ -57,6 +67,12 @@ public class OrderQueue {
             throw new RuntimeException("This order does not have time received");
         }
         
+    }
+    public String report(){
+        if (orderQueue.isEmpty()){
+            return "";
+        }else 
+            return "JSON";
     }
 }
 
