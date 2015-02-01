@@ -55,7 +55,7 @@ public class OrderQueue {
        else 
            throw new RuntimeException("This order does not have time processed");
                   
-   }
+   } 
  
    
     public void fulfill(Order order){
@@ -73,7 +73,7 @@ public class OrderQueue {
         if (orderQueue.isEmpty()){
             return "";
         }else 
-            return "JSON";
+            return "JSON ";
     }
 }
 

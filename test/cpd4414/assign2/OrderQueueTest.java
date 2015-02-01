@@ -112,7 +112,7 @@ public class OrderQueueTest {
     }
     
  @Test
-    public void testGivenRequestOrderThereIsNoOrderInSystemReturnNull() {
+    public void testGivenRequestForNextOrderWhenThereIsNoOrderInSystemReturnNull() {
        OrderQueue orderQueue = new OrderQueue();
        Order result =orderQueue.nextOrder();
         assertEquals(result, null);   
@@ -145,6 +145,11 @@ public class OrderQueueTest {
         }
         assertTrue(existThrow);
     }
+    
+    @Test
+    public void testGivenRequestToFulfilOrderWhenOrderHasTimeProcessedAndAllPurchaseInStockSetTimeFulfilToNow(){
+    
+}
     
     
     @Test
@@ -182,6 +187,17 @@ public class OrderQueueTest {
       assertTrue(existThrow);
     }
     
+    @Test
+    public void testGivenRequestForReportWhenThereAreNoOrderInSystemReturnEmptyString(){
+        OrderQueue orderQueue = new OrderQueue();
+        String result =orderQueue.report();
+        assertEquals("",result);
+    }
+    
+    @Test
+    public void testGivenRequestForReportWhenThereAreOrdersInSystemThenReturnAJSONOnbject(){
+        
+    }
     }
 
 
