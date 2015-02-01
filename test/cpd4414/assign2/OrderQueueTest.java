@@ -120,14 +120,32 @@ public class OrderQueueTest {
     
     @Test
     public void testGivenRequestToProcessOrderWhenOrderTimeReceivedAndPurchaseInStockSetTimeProcessToNow(){
-   OrderQueue orderQueue = new OrderQueue();
+        OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("CUST00001", "ABC Construction");
-        orderQueue.add(order);
-        
-        long expResult = new Date().getTime();
-        long result = order.getTimeReceived().getTime();
-        assertTrue(Math.abs(result - expResult) < 1000);
+        order.addPurchase(new Purchase("PROD0004", 450));
+        order.addPurchase(new Purchase("PROD0006", 250));
+        order.setTimeReceived(new Date());
+        orderQueue.processed(order);
+        assertEquals(new Date().getTime(), order.getTimeProcessed().getTime());
     }
+     
+    @Test
+    public void testGivenRequestToProcessOrderWhenOrderDoesNotHaveTimeReceivedThrowException() throws Exception{
+        boolean existThrow=false;
+        OrderQueue orderQueue = new OrderQueue();
+        Order order = new Order("CUST00001", "ABC Construction");
+        order.addPurchase(new Purchase("PROD0004", 450));
+        order.addPurchase(new Purchase("PROD0006", 250));
+        
+        try {
+            orderQueue.processed(order);
+        }
+        catch (RuntimeException ex){
+            existThrow = true;
+        }
+        assertTrue(existThrow);
+    }
+    
     
     @Test
     public void testGivenRequestToFulfillOrderWhenOrderDoesNotHaveTimeProcessedThrowException() throws Exception{
@@ -137,7 +155,6 @@ public class OrderQueueTest {
         order.addPurchase(new Purchase("PROD0004", 450));
         order.addPurchase(new Purchase("PROD0006", 250));
         order.setTimeProcessed(new Date(new Date().getTime()-1234567890));
-        orderQueue.add(order);
         try{
           orderQueue.fulfill(order);
       }

@@ -50,7 +50,7 @@ public class OrderQueue {
      public void processed(Order order){
        if (order.getTimeReceived()!=null)
        {
-           throw new RuntimeException("This order does not have time processed");
+           order.setTimeProcessed(new Date());
        }
        else 
            throw new RuntimeException("This order does not have time processed");
@@ -68,6 +68,7 @@ public class OrderQueue {
         }
         
     }
+    
     public String report(){
         if (orderQueue.isEmpty()){
             return "";
